@@ -5,9 +5,18 @@ go 1.17
 require go.uber.org/fx v1.16.0
 
 require (
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.11.0 // indirect
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/joho/godotenv v1.4.0 // indirect
+)
+
+require (
+	github.com/aws/aws-sdk-go v1.43.0
 	github.com/aws/aws-sdk-go-v2 v1.13.0 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.13.1 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.8.0 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.6.0
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.10.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.4 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.2.0 // indirect
