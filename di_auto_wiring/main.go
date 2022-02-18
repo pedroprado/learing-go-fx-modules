@@ -1,13 +1,13 @@
 package main
 
 import (
-	"example.auto.wiring/core/service"
-	"example.auto.wiring/handlers"
-	"example.auto.wiring/infra/configs"
-	"example.auto.wiring/infra/database"
-	"example.auto.wiring/infra/loggerfx"
-	"example.auto.wiring/infra/repository"
-	"example.auto.wiring/infra/serverfx"
+	"example.auto.wiring/src/core/service"
+	"example.auto.wiring/src/handlers"
+	"example.auto.wiring/src/infra/configs"
+	"example.auto.wiring/src/infra/database"
+	"example.auto.wiring/src/infra/loggerfx"
+	"example.auto.wiring/src/infra/repository"
+	"example.auto.wiring/src/infra/serverfx"
 	"go.uber.org/fx"
 )
 

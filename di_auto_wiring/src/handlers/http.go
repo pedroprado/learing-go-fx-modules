@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
+	"example.auto.wiring/src/core/domain"
+	"example.auto.wiring/src/core/service"
 	"io/ioutil"
 	"net/http"
 
-	"example.auto.wiring/core/domain"
-	"example.auto.wiring/core/service"
 	"github.com/gorilla/mux"
 )
 

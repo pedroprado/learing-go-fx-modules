@@ -1,8 +1,8 @@
 package service
 
 import (
-	"example.auto.wiring/core/domain"
-	"example.auto.wiring/infra/repository"
+	"example.auto.wiring/src/core/domain"
+	"example.auto.wiring/src/infra/repository"
 )
 
 type PersonService struct {

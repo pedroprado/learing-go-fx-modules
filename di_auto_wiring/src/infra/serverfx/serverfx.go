@@ -2,9 +2,9 @@ package serverfx
 
 import (
 	"context"
+	"example.auto.wiring/src/handlers"
 	"net/http"
 
-	"example.auto.wiring/handlers"
 	"github.com/gorilla/mux"
 	"go.uber.org/fx"
 )

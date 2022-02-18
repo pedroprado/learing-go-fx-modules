@@ -2,9 +2,9 @@ package database
 
 import (
 	"context"
+	configs2 "example.auto.wiring/src/infra/configs"
+	"example.auto.wiring/src/infra/loggerfx"
 
-	"example.auto.wiring/infra/configs"
-	"example.auto.wiring/infra/loggerfx"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
@@ -18,8 +18,8 @@ var Module = fx.Options(
 )
 
 func NewDynamoDB(logger loggerfx.Logger,
-	databaseConfig *configs.DatabaseConfig,
-	awsConfig *configs.AwsConfig) *DynamoDB {
+	databaseConfig *configs2.DatabaseConfig,
+	awsConfig *configs2.AwsConfig) *DynamoDB {
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithRegion(awsConfig.AwsRegion),

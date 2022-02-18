@@ -2,9 +2,9 @@ package repository
 
 import (
 	"context"
+	"example.auto.wiring/src/core/domain"
+	"example.auto.wiring/src/infra/database"
 
-	"example.auto.wiring/core/domain"
-	"example.auto.wiring/infra/database"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
@@ -59,10 +59,11 @@ func (ref *PersonRepository) Get(id string) (*domain.Person, error) {
 	}
 
 	person := domain.Person{}
+	attributevalue.UnmarshalMap(out.Item, &person)
 	if person.Id == "" {
 		return nil, nil
 	}
-	attributevalue.UnmarshalMap(out.Item, &person)
+
 	return &person, nil
 }
 
