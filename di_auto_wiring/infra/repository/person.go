@@ -2,8 +2,8 @@ package repository
 
 import (
 	"context"
-	"fmt"
 
+	"example.auto.wiring/core/domain"
 	"example.auto.wiring/infra/database"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -24,13 +24,9 @@ func newPersonRepository(db *database.DynamoDB) *PersonRepository {
 	}
 }
 
-func (ref *PersonRepository) Create() error {
-	person := Person{
-		FirstName: "Paulo",
-		LastName:  "Simoes",
-	}
-
-	dynamoItem := marshalPerson(person)
+func (ref *PersonRepository) Create(person domain.Person) (*domain.Person, error) {
+	id := uuid.New().String()
+	dynamoItem := marshalPerson(person, id)
 
 	putItem := &dynamodb.PutItemInput{
 		TableName: aws.String(personTable),
@@ -39,15 +35,16 @@ func (ref *PersonRepository) Create() error {
 
 	out, err := ref.db.Client.PutItem(context.TODO(), putItem)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	fmt.Println("Person created")
-	fmt.Printf("%+v", out.ResultMetadata)
-	return nil
+	created, _ := ref.Get(id)
+	attributevalue.UnmarshalMap(out.Attributes, &person)
+
+	return created, nil
 }
 
-func (ref *PersonRepository) Get(id string) error {
+func (ref *PersonRepository) Get(id string) (*domain.Person, error) {
 
 	getItem := &dynamodb.GetItemInput{
 		TableName: aws.String(personTable),
@@ -58,19 +55,19 @@ func (ref *PersonRepository) Get(id string) error {
 
 	out, err := ref.db.Client.GetItem(context.TODO(), getItem)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	fmt.Println("Person got")
-	person := Person{}
+	person := domain.Person{}
+	if person.Id == "" {
+		return nil, nil
+	}
 	attributevalue.UnmarshalMap(out.Item, &person)
-	fmt.Printf("%+v", person)
-	return nil
+	return &person, nil
 }
 
-func marshalPerson(person Person) map[string]types.AttributeValue {
-	id := uuid.New().String()
-	fmt.Println("new person id: ", id)
+func marshalPerson(person domain.Person, id string) map[string]types.AttributeValue {
+
 	return map[string]types.AttributeValue{
 		"Id":        &types.AttributeValueMemberS{Value: id},
 		"FirstName": &types.AttributeValueMemberS{Value: person.FirstName},
